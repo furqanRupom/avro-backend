@@ -53,8 +53,21 @@ export function configureApp(app: INestApplication) {
     .build();
 
   const swaggerDocument = SwaggerModule.createDocument(app, swaggerConfig);
-  SwaggerModule.setup('api/docs', app, swaggerDocument);
-  SwaggerModule.setup('api/v1/docs', app, swaggerDocument);
+
+  // Use unpkg CDN for Swagger static assets so the UI works on serverless
+  // hosts (Vercel) where local static file serving is not available.
+  const swaggerUiVersion = '5.18.2';
+  const cdnBase = `https://unpkg.com/swagger-ui-dist@${swaggerUiVersion}`;
+  const swaggerUiOptions = {
+    customCssUrl: `${cdnBase}/swagger-ui.css`,
+    customJs: [
+      `${cdnBase}/swagger-ui-bundle.js`,
+      `${cdnBase}/swagger-ui-standalone-preset.js`,
+    ],
+  };
+
+  SwaggerModule.setup('api/docs', app, swaggerDocument, swaggerUiOptions);
+  SwaggerModule.setup('api/v1/docs', app, swaggerDocument, swaggerUiOptions);
 
   return { configService };
 }
