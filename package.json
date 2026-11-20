@@ -1,6 +1,7 @@
 {
   "name": "avro-backend",
   "version": "0.0.1",
+  "packageManager": "pnpm@12.21.0",
   "description": "",
   "author": "",
   "private": true,
