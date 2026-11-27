@@ -90,8 +90,8 @@ export class AuthService {
 
     res.clearCookie('token', {
       httpOnly: true,
-      secure: isProduction,
-      sameSite: isProduction ? 'strict' : 'lax',
+      secure: false,
+      sameSite: 'lax',
       path: '/',
     });
 
@@ -158,7 +158,7 @@ export class AuthService {
     res.cookie('token', token, {
       httpOnly: true,
       secure: false,
-      sameSite: isProduction ? 'none' : 'none',
+      sameSite: 'lax',
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
       path: '/',
     });
